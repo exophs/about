@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Me - Ray</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.4;
+            background: linear-gradient(to right, #3a0a6f, #0e0037); /* Dark purple gradient background */
+            background-size: 200% 200%;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-align: center;
+            min-height: 100vh;
+            transition: background-position 0.1s ease-out;
+            position: relative; /* Ensure positioning context for footer */
+            transform: scale(0.9); /* Zoom out effect */
+            transform-origin: center; /* Ensure scaling is centered */
+            width: 111%; /* Adjust width to avoid overflow */
+            height: 111%; /* Adjust height to avoid overflow */
+        }
+        /* Neon Glow Effect */
+        h1, h3 {
+            color: #fff;
+            margin: 10px 0;
+            font-family: 'Montserrat', sans-serif;
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        h1:hover, h3:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+        p {
+            color: #fff;
+            font-size: 1em;
+            font-weight: normal;
+            margin: 5px 0;
+            transition: transform 0.3s ease;
+        }
+        p:hover {
+            transform: translateY(-3px);
+        }
+        .profile-pic {
+            border-radius: 10%;
+            width: 120px;
+            height: 120px;
+            margin: 10px 0;
+            user-drag: none; /* Prevent dragging */
+            -webkit-user-drag: none; /* For Safari */
+            transition: transform 0.3s ease; /* Smooth transition for size changes */
+        }
+        .profile-pic:hover {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .interests, .contact-info {
+            margin: 10px 0;
+        }
+        .contact-info a {
+            color: #80b3ff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .contact-info a:hover {
+            color: #b3d9ff;
+        }
+        .animated-text {
+            animation: fadeIn 2s ease-in-out;
+            max-width: 1000px; /* Adjust the max-width as needed */
+            word-wrap: break-word; /* Allows long words to be broken and wrapped onto the next line */
+            overflow-wrap: break-word; /* Same as word-wrap, used for better compatibility */
+            margin: 0 auto; /* Center the text block */
+            padding: 0 10px; /* Add some padding to ensure text doesn't touch the edges */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .social-icons img, .tech-icons img {
+            vertical-align: middle;
+            transition: filter 0.3s ease;
+            user-drag: none; /* Prevent dragging */
+            -webkit-user-drag: none; /* For Safari */
+        }
+        .social-icons, .tech-icons {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .tech-icons {
+            margin-bottom: 30px; /* Space below the tech icons */
+        }
+        .tech-icons a {
+            margin: 0 5px;
+            display: inline-block;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .tech-icons a:hover {
+            transform: scale(1.1);
+        }
+        .tech-icons a::before {
+            content: attr(data-name);
+            position: absolute;
+            bottom: 100%; /* Position above the icon */
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 5px; /* Space between icon and text */
+            background-color: #333;
+            color: #fff;
+            padding: 3px 6px;
+            border-radius: 5px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            font-size: 12px;
+        }
+        .tech-icons a:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
+        .tech-icons img {
+            width: 30px;
+            height: 30px;
+        }
+        .preview-tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .preview-tooltip .preview {
+            visibility: hidden;
+            width: 300px; /* Adjust width as needed */
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Adjust positioning as needed */
+            left: 50%;
+            margin-left: -150px; /* Adjust centering as needed */
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        .preview-tooltip:hover .preview {
+            visibility: visible;
+            opacity: 1;
+        }
+        .preview img {
+            max-width: 100%;
+            border-radius: 5px;
+            user-drag: none; /* Prevent dragging */
+            -webkit-user-drag: none; /* For Safari */
+        }
+        footer {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 0.7em; /* Smaller font size */
+            color: #ccc;
+            text-align: left;
+        }
+        footer a {
+            color: #80b3ff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #b3d9ff;
+        }
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        .background:hover {
+            transform: scale(1.1);
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        /* Collage styling */
+        .collage {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .collage img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .collage img:hover {
+            transform: scale(1.05);
+        }
+        /* Lightbox styling */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 10px;
+        }
+        .lightbox .close, .lightbox .prev, .lightbox .next {
+            position: fixed;
+            top: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 50%;
+            z-index: 1001; /* Ensure it's above other content */
+        }
+        .lightbox .close {
+            right: 10px;
+        }
+        .lightbox .prev {
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .lightbox .next {
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+    <a href="https://exophs-.glitch.me/" class="back-button">Back</a>
+    <div class="background"></div>
+    <div class="container">
+        <h1>Hi, I'm Ray</h1>
+        <h3>A Small Dev</h3>
+        <img src="https://avatars.githubusercontent.com/u/91388963?v=4" alt="Profile Picture" class="profile-pic" />
+        <p class="animated-text">
+            Hi, my name is Ray. I'm 16 years old and I live in South Carolina, USA.
+            I'm a small developer with a passion for making websites. I enjoy
+            experimenting with different designs and learning new web technologies.
+        </p>
+        <p>
+            I'm currently working on 
+            <span class="preview-tooltip">
+                <a href="https://github.com/exophs/exophs.github.io" target="_blank" style="color: #80b3ff;">exophs.github.io</a>
+                <span class="preview">
+                    <img src="https://ray.confusing.wtf/u/xoSHbY.png" alt="Preview of exophs.github.io" />
+                </span>
+            </span>
+        </p>
+        <p>
+            I'm currently learning <strong>HTML</strong>
+        </p>
+        <p>
+            How to reach me: <strong>.exophs on Discord</strong>
+        </p>
+        <div class="interests">
+            <p>I also enjoy playing video games.</p>
+        </div>
+        <div class="contact-info">
+            <p>Contact me: <a href="mailto:bezeski@gmail.com">bezeski@gmail.com</a></p>
+        </div>
+        <div class="social-icons">
+            <h3>Connect with me:</h3>
+            <p>
+                <a href="https://instagram.com/exophorism" target="_blank">
+                    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="Instagram" height="30" width="40" />
+                </a>
+            </p>
+        </div>
+        <div class="tech-icons">
+            <h3>Languages and Tools:</h3>
+            <p>
+                <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer" data-name="CSS">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="CSS3" />
+                </a>
+                <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer" data-name="HTML5">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="HTML5" />
+                </a>
+                <a href="https://www.java.com" target="_blank" rel="noreferrer" data-name="Java">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="Java" />
+                </a>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer" data-name="JavaScript">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" />
+                </a>
+                <a href="https://www.linux.org/" target="_blank" rel="noreferrer" data-name="Linux">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="Linux" />
+                </a>
+                <a href="https://www.python.org" target="_blank" rel="noreferrer" data-name="Python">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python" />
+                </a>
+            </p>
+        </div>
+        <!-- Collage Section -->
+        <div class="collage">
+            <img src="https://images.confusing.wtf/u/42Wo9O.jpeg" alt="Collage Image 1" />
+            <img src="https://images.confusing.wtf/u/8jcAUh.jpeg" alt="Collage Image 2" />
+            <img src="https://images.confusing.wtf/u/UfeHQT.jpeg" alt="Collage Image 3" />
+            <img src="https://images.confusing.wtf/u/adKDTm.jpeg" alt="Collage Image 4" />
+        </div>
+    </div>
+    <div id="lightbox" class="lightbox">
+        <button class="close">&times;</button>
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+        <img id="lightbox-img" src="" alt="Lightbox Image" />
+    </div>
+    <footer>
+        <p>Made with ❤️ by Ray. Powered by <a href="https://glitch.com" target="_blank">Glitch</a>.</p>
+    </footer>
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const images = document.querySelectorAll('.collage img');
+        let currentIndex = 0;
+
+        images.forEach((image, index) => {
+            image.addEventListener('click', () => {
+                openLightbox(index);
+            });
+        });
+
+        function openLightbox(index) {
+            lightbox.style.display = 'flex';
+            lightboxImg.src = images[index].src;
+            currentIndex = index;
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+
+        function changeImage(direction) {
+            currentIndex = (currentIndex + direction + images.length) % images.length;
+            lightboxImg.src = images[currentIndex].src;
+        }
+
+        document.querySelector('.lightbox .close').addEventListener('click', closeLightbox);
+        document.querySelector('.lightbox .prev').addEventListener('click', () => changeImage(-1));
+        document.querySelector('.lightbox .next').addEventListener('click', () => changeImage(1));
+
+        document.addEventListener('keydown', (event) => {
+            if (lightbox.style.display === 'flex') {
+                if (event.key === 'Escape') {
+                    closeLightbox();
+                } else if (event.key === 'ArrowLeft') {
+                    changeImage(-1);
+                } else if (event.key === 'ArrowRight') {
+                    changeImage(1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
